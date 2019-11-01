@@ -17,6 +17,7 @@ const FileList = ({fileData, onFileClick, onSaveEdit, onFileDelete}) => {
     setEditId(data.id)
     setEditValue(data.title)
   }
+
   const closeEdit = (file) => {
     setEditStatus(false)
     setEditId('')
@@ -25,25 +26,28 @@ const FileList = ({fileData, onFileClick, onSaveEdit, onFileDelete}) => {
       onFileDelete(file.id)
     }
   } 
+
   useEffect(()=>{
     const editItem = fileData.find(file => file.id === editId)
-    if(enterPress && editStatus && editValue.trim() !== '') {
+    if (enterPress && editStatus && editValue.trim() !== '') {
       onSaveEdit(editId, editValue);
       setEditId('')
       setEditValue('')
     }
-    if(escPress && editStatus) {
+    if (escPress && editStatus) {
       closeEdit(editItem)
     }
   })
+
   useEffect(()=>{
     const newFile = fileData.find(file => file.isNew)
-    if (newFile){
+    if (newFile) {
       setEditStatus(true)
       setEditId(newFile.id)
       setEditValue(newFile.title)
     }
   },[fileData])
+  
   return (
     <ul className="list-group list-group-flush">
       {

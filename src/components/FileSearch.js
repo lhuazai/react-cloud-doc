@@ -14,7 +14,7 @@ const FileSearch = ({ title, onFileSearch }) => {
   const closeKeyBoard = () => {
     setInputActive(false);
     setInputValue('');
-    onFileSearch(false)
+    onFileSearch('')
   };
   useEffect(() => {
     if(enterPress && inputActive) {

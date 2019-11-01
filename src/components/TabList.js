@@ -6,11 +6,10 @@ import classNames from "classnames";
 import './TabList.scss'
 
 const TabList = ({ fileData, activeId, unSaveIds, onTabClick, onCloseTab }) => {
-  console.log('fileData', fileData);
   return (
     <ul className="nav nav-pills tablist-component">
       {
-        fileData.map((item, index) => {
+        fileData.length > 0 && fileData.map((item, index) => {
           const withUnSaveMark = unSaveIds.includes(item.id)
           const fClassName = classNames({
             'nav-link': true,

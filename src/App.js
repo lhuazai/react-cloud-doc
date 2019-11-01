@@ -56,9 +56,8 @@ function App() {
   const tabClose = (id) => {
     const tabWithout = openedFileIds.filter(fileId => fileId !== id)
     setOpenedIds(tabWithout)
-    if (tabWithout.length > 0){
+    if (tabWithout.length > 0) {
       setActiveFileId(tabWithout[0])
-      console.log(tabWithout, files);
     }else {
       setActiveFileId('')
     }
@@ -69,9 +68,9 @@ function App() {
     const newFile = [
       ...files,
       {
-        id:newID,
-        title:'',
-        data: '## 请输入',
+        id: newID,
+        title: '',
+        data: '## 请输入 Markdown',
         createAt: new Date().getTime(),
         isNew: true
       }
@@ -81,7 +80,7 @@ function App() {
 
   const fileClick = (id) => {
     setActiveFileId(id)
-    if (!openedFileIds.includes(id)){
+    if (!openedFileIds.includes(id)) {
       setOpenedIds([...openedFileIds,id])
     }
   }
@@ -94,7 +93,7 @@ function App() {
       return file
     })
     setFiles(newFiles)
-    if (!unSaveFileIds.includes(id)){
+    if (!unSaveFileIds.includes(id)) {
       setUnSaveFileIds([ ...unSaveFileIds, id])
     }
   }
