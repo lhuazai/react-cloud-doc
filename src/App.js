@@ -3,7 +3,7 @@ import './App.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import "easymde/dist/easymde.min.css";
 import uuidv4 from 'uuid/v4';
-import { flattenArr, objToArr } from './utils/helper'
+import {  objToArr } from './utils/helper'
 import fileHelper from './utils/fileHelper'
 import FileSearch from './components/FileSearch';
 import FileList from './components/FileList';
@@ -12,9 +12,10 @@ import BottomButton from './components/BottomButton'
 import TabList from './components/TabList'
 import { faPlus, faFileImport } from "@fortawesome/free-solid-svg-icons";
 import SimpleMDE from "react-simplemde-editor";
+import useStateWithPromise from './hooks/useStateWithPromise'
 
 
-const { join, basename, extname, dirname } = window.require('path')
+const { join } = window.require('path')
 const { remote } = window.require('electron')
 const Store = window.require('electron-store')
 
@@ -41,9 +42,10 @@ function App() {
   const [ openedFileIds, setOpenedIds ] = useState([]);
   const [ unSaveFileIds, setUnSaveFileIds ] = useState([]);
   const [ searchFiles, setSearchFiles ] = useState([]);
+  const [ he, setHe ] = useState({value:5})
+  const [ hello, setHello ] = useStateWithPromise({value:5})
 
   const savedLocation = remote.app.getPath('downloads')
-  console.log(files);
   const filesArr = objToArr(files)
   const fileList = searchFiles.length > 0 ? searchFiles : filesArr
 
@@ -69,14 +71,12 @@ function App() {
   }
 
   const fileDelete = (fileId) => {
-    console.log('files[fileId].path', files[fileId].path);
     fileHelper.deleteFile(files[fileId].path).then(()=>{
       delete files[fileId]
       setFiles(files)
       saveFilesToStore(files)
       tabClose(fileId)
     })
-    
   }
 
   const updateFileName = (id, title, isNew) => {
@@ -114,6 +114,8 @@ function App() {
   }
 
   const fileClick = (id) => {
+    setHello({value:100}).then((value)=>{console.log(value)})
+    setHe({value:300})
     setActiveFileId(id)
     if (!openedFileIds.includes(id)) {
       setOpenedIds([...openedFileIds,id])
@@ -132,6 +134,12 @@ function App() {
     fileHelper.writeFile(join(savedLocation, `${activeFile.title}.md`), activeFile.data).then(()=>{
       setUnSaveFileIds(unSaveFileIds.filter(id => id !== activeFileId))
     })
+  }
+  useEffect(()=>{
+    test()
+  })
+  const test = () => {
+    console.log('he', he);
   }
   
   return (
